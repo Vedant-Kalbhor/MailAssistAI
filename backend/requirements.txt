@@ -1,0 +1,12 @@
+flask
+flask-cors
+scikit-learn
+pandas
+numpy
+joblib
+transformers
+torch
+google-api-python-client
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
