@@ -1,0 +1,60 @@
+ai_email_assistant/
+│
+├── backend/
+│   ├── app.py
+│   ├── requirements.txt
+│   ├── config.py
+│   │
+│   ├── modules/
+│   │   ├── email_fetcher.py
+│   │   ├── preprocessor.py
+│   │   ├── classifier.py      ← YOUR EXISTING LOGIC
+│   │   ├── reply_generator.py
+│   │   ├── followup_manager.py
+│   │
+│   ├── models/
+│   │   ├── spam_model.pkl
+│   │   ├── transformer_classifier/
+│   │   ├── reply_model/
+│   │
+│   ├── routes/
+│   │   ├── email_routes.py
+│   │   ├── classify_routes.py
+│   │   ├── reply_routes.py
+│   │
+│   ├── utils/
+│   │   ├── auth.py
+│   │   ├── gmail_api.py
+│   │   ├── logger.py
+│   │
+│   └── database/
+│       ├── models.py
+│       ├── db_config.py
+│
+├── frontend/
+│   ├── react_dashboard/
+│   │   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── services/
+│
+├── extension/                 ← YOUR EXISTING PROJECT REUSED
+│   ├── manifest.json
+│   ├── popup.html
+│   ├── popup.js
+│   ├── content.js
+│
+├── ml_training/
+│   ├── spam_training.ipynb
+│   ├── multi_class_training.ipynb
+│   ├── reply_training.ipynb
+│
+├── data/
+│   ├── raw_emails.csv
+│   ├── processed.csv
+│
+├── docs/
+│   ├── architecture.md
+│   ├── api_docs.md
+│
+└── README.md

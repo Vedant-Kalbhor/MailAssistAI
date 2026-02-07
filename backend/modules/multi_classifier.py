@@ -1,15 +1,17 @@
-def classify_multi(email_text):
+from transformers import pipeline
 
-    # TEMP LOGIC
-    text = email_text.lower()
+classifier = pipeline(
+    "text-classification",
+    model="distilbert-base-uncased-finetuned-sst-2-english"
+)
 
-    if "meeting" in text or "deadline" in text:
-        return "important"
+def classify_multi(email):
 
-    if "please respond" in text:
-        return "follow_up"
+    result = classifier(email)[0]
 
-    if "offer" in text or "lottery" in text:
+    label = result["label"]
+
+    if "NEGATIVE" in label:
         return "spam"
 
-    return "normal"
+    return "important"
