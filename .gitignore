@@ -1,0 +1,83 @@
+# ============================
+# Python & Environment Files
+# ============================
+
+venv/
+env/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# ============================
+# Datasets - DO NOT PUSH DATA
+# ============================
+
+data/
+*.zip
+*.tar.gz
+
+# ============================
+# Trained Models - VERY LARGE
+# ============================
+
+# Ignore all trained models
+backend/models/*
+ml_training/results/
+ml_training/logs/
+results
+nltk_data
+transformer_classifier
+
+# But keep model folder structure
+!backend/models/.gitkeep
+
+# Ignore transformer checkpoints
+checkpoint-*/
+runs/
+
+# ============================
+# Credentials & Secrets
+# ============================
+
+backend/utils/credentials.json
+backend/utils/token.json
+.env
+config.py
+
+# ============================
+# Node / React Files
+# ============================
+
+frontend/react_dashboard/node_modules/
+frontend/react_dashboard/build/
+
+# ============================
+# IDE & System Files
+# ============================
+
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ============================
+# Chrome Extension Artifacts
+# ============================
+
+extension/*.crx
+extension/*.pem
+
+# ============================
+# OS Generated Files
+# ============================
+
+*.bak
+*.tmp
