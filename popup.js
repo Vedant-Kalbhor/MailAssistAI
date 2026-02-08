@@ -38,4 +38,16 @@ document.getElementById("checkSpam").addEventListener("click", function () {
         resultDiv.innerHTML = "❌ Error checking spam. Please try again.";
         resultDiv.style.color = "orange";
     });
+
+    
+    fetch("http://localhost:5000/multi_classify", {
+        method: "POST",
+        body: JSON.stringify({ email: emailText }),
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("result").innerText = data.category;
+      });
+      
 });
