@@ -3,11 +3,16 @@ from modules.reply_generator import generate_reply
 
 reply_bp = Blueprint("reply", __name__)
 
-@reply_bp.route("/reply", methods=["POST"])
-def reply():
+@reply_bp.route("/generate_reply", methods=["POST"])
+def reply_email():
+    data = request.json
+    email = data.get("email")
 
-    email = request.json.get("email")
+    if not email:
+        return jsonify({"error": "email text required"}), 400
 
-    response = generate_reply(email)
+    reply = generate_reply(email)
 
-    return jsonify({"reply": response})
+    return jsonify({
+        "reply": reply
+    })

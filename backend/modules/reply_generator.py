@@ -1,11 +1,18 @@
-from transformers import pipeline
+def generate_reply(email_text):
+    """
+    Temporary rule-based reply generator.
+    Later we can replace with AI model.
+    """
 
-generator = pipeline("text-generation", model="gpt2")
+    email_text = email_text.lower()
 
-def generate_reply(email):
+    if "meeting" in email_text:
+        return "Sure, I am available for the meeting. Please share the details."
 
-    prompt = f"Write a professional email reply to: {email}"
+    if "deadline" in email_text:
+        return "Thanks for the update. I will make sure to complete it before the deadline."
 
-    response = generator(prompt, max_length=120)
+    if "thank" in email_text:
+        return "You're welcome! Happy to help."
 
-    return response[0]["generated_text"]
+    return "Thank you for your email. I will get back to you shortly."

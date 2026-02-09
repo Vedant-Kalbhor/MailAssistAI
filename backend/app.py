@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
-from routes.classify_routes import classify_bp,multi_bp
+from routes.classify_routes import classify_bp
+from routes.multi_classify import multi_bp
 from routes.email_routes import email_bp
 from routes.reply_routes import reply_bp
 
