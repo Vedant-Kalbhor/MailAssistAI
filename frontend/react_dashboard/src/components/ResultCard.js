@@ -8,7 +8,7 @@ const ResultCard = ({ result }) => {
       <h3>Classification Result</h3>
 
       <p>
-        <b>Category:</b> {result.category}
+        <b>Category:</b> {result.category || "Not Classified"}
       </p>
 
       <h4>Suggested Reply</h4>
@@ -16,7 +16,7 @@ const ResultCard = ({ result }) => {
       <textarea
         rows="5"
         cols="60"
-        value={result.reply}
+        value={result.reply || ""}
         readOnly
       />
     </div>

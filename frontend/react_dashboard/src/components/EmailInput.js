@@ -1,40 +1,51 @@
 import React, { useState } from "react";
-import { classifyEmail, generateReply } from "../services/api";
+import { classifyEmail } from "../services/api";
+import ResultCard from "./ResultCard";
 
-const EmailInput = ({ setResult }) => {
+const EmailForm = () => {
   const [email, setEmail] = useState("");
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
+    setLoading(true);
+
     try {
-      const classification = await classifyEmail(email);
-      const reply = await generateReply(email);
+      const response = await classifyEmail(email);
 
-      setResult({
-        category: classification.data.label,
-        reply: reply.data.reply,
-        text: email
-      });
+      console.log("API Response:", response.data);
 
-    } catch (err) {
-      alert("Error connecting backend");
+      setResult(response.data);
+    } catch (error) {
+      console.error("API Error:", error);
     }
+
+    setLoading(false);
   };
 
   return (
     <div>
+      <h2>AI Email Assistant</h2>
+
       <textarea
-        rows="8"
-        cols="60"
+        rows="6"
+        cols="70"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Paste email text here..."
+        placeholder="Paste your email here..."
       />
 
       <br />
 
-      <button onClick={handleSubmit}>Analyze Email</button>
+      <button onClick={handleSubmit}>
+        Analyze Email
+      </button>
+
+      {loading && <p>Analyzing...</p>}
+
+      <ResultCard result={result} />
     </div>
   );
 };
 
-export default EmailInput;
+export default EmailForm;

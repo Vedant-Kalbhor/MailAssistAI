@@ -1,20 +1,3 @@
-# from transformers import pipeline
-
-# classifier = pipeline(
-#     "text-classification",
-#     model="distilbert-base-uncased-finetuned-sst-2-english"
-# )
-
-# def classify_multi(email):
-
-#     result = classifier(email)[0]
-
-#     label = result["label"]
-
-#     if "NEGATIVE" in label:
-#         return "spam"
-
-#     return "important"
 from transformers import pipeline
 import os
 
@@ -41,4 +24,4 @@ def classify_multi(email):
 
     label = result["label"]
 
-    return label_map[label]
+    return label_map.get(label, "unknown")

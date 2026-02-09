@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from modules.multi_classifier import classify_multi
+from modules.reply_generator import generate_reply
 
 multi_bp = Blueprint("multi", __name__)
 
@@ -8,6 +9,11 @@ def multi():
 
     email = request.json.get("email")
 
-    result = classify_multi(email)
+    category = classify_multi(email)
 
-    return jsonify({"category": result})
+    reply = generate_reply(email)
+
+    return jsonify({
+        "category": category,
+        "reply": reply
+    })
