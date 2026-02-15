@@ -18,6 +18,9 @@ def authenticate_gmail():
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
+            if not os.path.exists(Config.GMAIL_CREDENTIALS):
+                print(f"Error: {Config.GMAIL_CREDENTIALS} not found. Please provide Gmail API credentials.")
+                return None
             flow = InstalledAppFlow.from_client_secrets_file(
                 Config.GMAIL_CREDENTIALS, SCOPES)
             creds = flow.run_local_server(port=0)

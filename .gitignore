@@ -46,10 +46,12 @@ runs/
 # Credentials & Secrets
 # ============================
 
-backend/utils/credentials.json
-backend/utils/token.json
+**/credentials.json
+**/token.json
 .env
 config.py
+*.pem
+*.key
 
 # ============================
 # Node / React Files

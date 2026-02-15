@@ -1,47 +1,52 @@
 from googleapiclient.discovery import build
 from google.oauth2.credentials import Credentials
+import os
+import base64
 from .auth import authenticate_gmail
 
-
 def get_gmail_service():
-    creds = Credentials.from_authorized_user_file("token.json")
+    creds = authenticate_gmail()
+    if not creds:
+        return None
     service = build("gmail", "v1", credentials=creds)
     return service
 
-def read_emails():
+def parse_header(headers, name):
+    for header in headers:
+        if header['name'].lower() == name.lower():
+            return header['value']
+    return ""
+
+def read_emails(max_results=10):
     service = get_gmail_service()
+    if not service:
+        return {"error": "Authentication failed or credentials missing"}
 
-    results = service.users().messages().list(userId="me").execute()
-    messages = results.get("messages", [])
+    try:
+        results = service.users().messages().list(userId="me", maxResults=max_results).execute()
+        messages = results.get("messages", [])
 
-    email_list = []
+        email_list = []
+        for msg in messages:
+            txt = service.users().messages().get(userId="me", id=msg["id"]).execute()
+            payload = txt.get("payload", {})
+            headers = payload.get("headers", [])
+            
+            subject = parse_header(headers, "Subject")
+            sender = parse_header(headers, "From")
+            date = parse_header(headers, "Date")
+            
+            email_list.append({
+                "id": msg["id"],
+                "snippet": txt.get("snippet", ""),
+                "subject": subject,
+                "sender": sender,
+                "date": date
+            })
 
-    for msg in messages[:10]:
-        txt = service.users().messages().get(
-            userId="me",
-            id=msg["id"]
-        ).execute()
+        return email_list
+    except Exception as e:
+        return {"error": str(e)}
 
-        email_list.append(txt["snippet"])
-
-    return email_list
-
-def get_service():
-    creds = authenticate_gmail()
-    return build('gmail', 'v1', credentials=creds)
-
-def fetch_recent_emails():
-
-    service = get_service()
-
-    results = service.users().messages().list(userId='me', maxResults=10).execute()
-
-    messages = results.get('messages', [])
-
-    email_texts = []
-
-    for msg in messages:
-        txt = service.users().messages().get(userId='me', id=msg['id']).execute()
-        email_texts.append(txt['snippet'])
-
-    return email_texts
+def fetch_recent_emails(max_results=10):
+    return read_emails(max_results)
